@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.env
+.venv
+env/
+venv/
+
+# Local Chromadb persistent storage
+chroma_db/
+
+# Environment variable files
+*.env
+.env.*
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Model cache (e.g., sentence-transformers)
+sentence_transformers/
+~$*
+
+# Python packaging
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Test/coverage tools
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
