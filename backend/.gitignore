@@ -1,50 +1,29 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environment
-.env
-.venv
+*.pyc
+*.pyo
+*.pyd
+.Python/
 env/
 venv/
+*.env
+.pytest_cache/
+.mypy_cache/
 
-# Local Chromadb persistent storage
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.bak
+*~
+.DS_Store
+
+# ChromaDB
 chroma_db/
 
-# Environment variable files
-*.env
-.env.*
-
-# IDEs and editors
-.vscode/
-.idea/
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Model cache (e.g., sentence-transformers)
-sentence_transformers/
-~$*
-
-# Python packaging
-*.egg
-*.egg-info/
-dist/
-build/
-.eggs/
-
-# Test/coverage tools
-.coverage
-.tox/
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-
-# Jupyter notebook checkpoints
-.ipynb_checkpoints/
+# Sentence Transformers (if models are downloaded locally)
+# If your embedding model is downloaded to a specific local path, add it here.
+# For 'all-MiniLM-L6-v2', it typically downloads to a cache directory.
+# You might need to adjust this based on where your system stores it.
+.cache/huggingface/
+.cache/torch/
