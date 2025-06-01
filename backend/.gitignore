@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+*.env
+.pytest_cache/
+.mypy_cache/
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.bak
+*~
+.DS_Store
+
+# ChromaDB
+chroma_db/
+
+# Sentence Transformers (if models are downloaded locally)
+# If your embedding model is downloaded to a specific local path, add it here.
+# For 'all-MiniLM-L6-v2', it typically downloads to a cache directory.
+# You might need to adjust this based on where your system stores it.
+.cache/huggingface/
+.cache/torch/
