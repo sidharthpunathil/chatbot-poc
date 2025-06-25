@@ -1,0 +1,33 @@
+# Python specific ignores
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+.Python/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+*venv*
+chat_venv/
+
+# PyCharm specific ignores
+.idea/
+*.iml
+*.ipr
+*.iws
+/.idea/workspace.xml # Specific PyCharm workspace file
+/.idea/libraries/
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Database files (if local, like your chroma_db)
+chroma_db/

@@ -1,3 +1,4 @@
+# main.py
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from backend.chat_logic import chat_router
@@ -36,7 +37,6 @@ app.add_middleware(
 # --- CORS Configuration End ---
 
 app.include_router(chat_router)
-
 
 @app.get("/", tags=["Root"])
 async def root():

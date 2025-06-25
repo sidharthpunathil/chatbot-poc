@@ -1,4 +1,3 @@
-# chatbot-poc
 # Chatbot PoC Backend API
 
 This repository contains the backend API for the Chatbot 
@@ -52,5 +51,4 @@ This repository contains the backend API for the Chatbot
 
     Interactive Docs (Swagger UI): Access the live API documentation in your browser: `http://127.0.0.1:8000/docs`
     Postman Collection: A Postman collection is added  in the `docs/` folder (`docs/AI_Chat_API_Collection.json`). Y
-
 
