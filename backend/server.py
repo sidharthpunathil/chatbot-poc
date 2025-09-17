@@ -1,13 +1,5 @@
-from fastapi import FastAPI
+from app.main import app
 
-from vector_db_routes import router as vector_db_router  # ✅ Make sure this line works
-
-app = FastAPI()
-
-# Root route
-@app.get("/")
-def root():
-    return {"message": "Hello from backend!"}
-
-# ✅ Include your router
-app.include_router(vector_db_router)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
