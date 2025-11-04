@@ -21,9 +21,11 @@ class Settings(BaseSettings):
     
     # Database Configuration
     CHROMA_DB_PATH: str = "./chroma_db"
+    DISABLE_TELEMETRY: bool = True
     
     # AI Configuration
     GROQ_API_KEY: Optional[str] = None
+    GROQ_MODEL: str = "meta-llama/llama-4-scout-17b-16e-instruct"
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
     
     # Chat Configuration
