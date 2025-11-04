@@ -26,7 +26,7 @@ class ChatService:
         """
         try:
             response = self.groq_client.chat.completions.create(
-                model="llama3-8b-8192",
+                model=settings.GROQ_MODEL,
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
