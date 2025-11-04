@@ -15,6 +15,7 @@ class BulkDocumentUpload(BaseModel):
 class CollectionCreate(BaseModel):
     name: str
     metadata: Dict[str, Any] = {}
+    overwrite: bool = False
 
 
 class DocumentInfo(BaseModel):

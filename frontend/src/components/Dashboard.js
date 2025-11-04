@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [documents, setDocuments] = useState([]);
   const [collections, setCollections] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState('default');
+  const [collectionNameInput, setCollectionNameInput] = useState('default');
   const [isUploading, setIsUploading] = useState(false);
   const [systemPrompt, setSystemPrompt] = useState('');
   const [uploadStatus, setUploadStatus] = useState(null);
@@ -23,17 +24,28 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadDocuments();
-    loadCollections();
   }, [loadDocuments]);
 
-  const loadCollections = async () => {
+  async function loadCollections() {
     try {
       const response = await documentAPI.listCollections();
-      setCollections(response.collections || []);
+      const list = response.collections || [];
+      setCollections(list);
+      if (list.length > 0) {
+        const names = list.map((c) => c.name);
+        // If current selection is missing, pick the first
+        setSelectedCollection((prev) => (prev && names.includes(prev) ? prev : names[0]));
+        // If input is empty, default to current selection for convenience
+        setCollectionNameInput((prev) => (prev ? prev : (names.includes(selectedCollection) ? selectedCollection : names[0])));
+      }
     } catch (error) {
       console.error('Failed to load collections:', error);
     }
-  };
+  }
+
+  useEffect(() => {
+    loadCollections();
+  }, []);
 
   const onDrop = async (acceptedFiles) => {
     if (acceptedFiles.length === 0) return;
@@ -80,17 +92,39 @@ const Dashboard = () => {
     }
   };
 
-  const handleCreateCollection = async () => {
-    const name = prompt('Enter collection name:');
+  const handleCreateCollection = async (overwrite = false) => {
+    const name = collectionNameInput.trim();
     if (!name) return;
-
     try {
-      await documentAPI.createCollection(name);
-      setUploadStatus({ type: 'success', message: `Collection "${name}" created successfully!` });
+      await documentAPI.createCollection(name, {}, overwrite);
+      setUploadStatus({ type: 'success', message: `Collection "${name}" ${overwrite ? 'created/replaced' : 'created'} successfully!` });
+      setSelectedCollection(name);
       await loadCollections();
     } catch (error) {
       console.error('Create collection failed:', error);
-      setUploadStatus({ type: 'error', message: 'Failed to create collection.' });
+      const detail = error?.response?.data?.detail || 'Failed to create collection.';
+      setUploadStatus({ type: 'error', message: detail });
+      // If it already exists, select it and refresh the list so it appears in dropdown
+      if (String(detail).toLowerCase().includes('already exists')) {
+        setSelectedCollection(name);
+      }
+      await loadCollections();
+    }
+  };
+
+  const handleDeleteCollection = async () => {
+    const name = collectionNameInput.trim();
+    if (!name) return;
+    if (!window.confirm(`Delete collection "${name}"?`)) return;
+    try {
+      await documentAPI.deleteCollection(name);
+      setUploadStatus({ type: 'success', message: `Collection "${name}" deleted.` });
+      // Reset selection to default if deleted selected
+      if (selectedCollection === name) setSelectedCollection('default');
+      await loadCollections();
+    } catch (error) {
+      console.error('Delete collection failed:', error);
+      setUploadStatus({ type: 'error', message: error?.response?.data?.detail || 'Failed to delete collection.' });
     }
   };
 
@@ -103,9 +137,13 @@ const Dashboard = () => {
   useEffect(() => {
     // Load system prompt from localStorage
     const saved = localStorage.getItem('systemPrompt');
-    if (saved) {
-      setSystemPrompt(saved);
+    if (saved) setSystemPrompt(saved);
+    const savedCollection = localStorage.getItem('selectedCollection');
+    if (savedCollection) {
+      setSelectedCollection(savedCollection);
+      setCollectionNameInput(savedCollection);
     }
+    // legacy keys are ignored now that Chat Config UI is removed
   }, []);
 
   return (
@@ -122,25 +160,52 @@ const Dashboard = () => {
       )}
 
       <div className="dashboard-content">
-        {/* Collection Selection */}
+        {/* Collection Management */}
         <div className="section collection-section">
           <h3>Collection</h3>
-          <div className="collection-container">
+          {/* Choose existing */}
+          <div className="collection-container" style={{ marginBottom: 12 }}>
             <select 
-              value={selectedCollection} 
-              onChange={(e) => setSelectedCollection(e.target.value)}
               className="collection-select"
+              value={selectedCollection}
+              onChange={(e) => {
+                setSelectedCollection(e.target.value);
+                try { localStorage.setItem('selectedCollection', e.target.value); } catch (_) {}
+              }}
             >
-              {collections.map((collection) => (
+              {(collections || []).map((collection) => (
                 <option key={collection.name} value={collection.name}>
                   {collection.name} ({collection.document_count} docs)
                 </option>
               ))}
             </select>
-            <button onClick={handleCreateCollection} className="new-collection-btn">
+          </div>
+
+          {/* Create / replace / delete */}
+          <div className="collection-container">
+            <input
+              type="text"
+              className="collection-input"
+              placeholder="Enter collection name"
+              value={collectionNameInput}
+              onChange={(e) => setCollectionNameInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleCreateCollection(false);
+              }}
+            />
+            <button onClick={() => handleCreateCollection(false)} className="new-collection-btn">
               <Plus size={16} />
-              New
+              Create
             </button>
+            <button onClick={() => handleCreateCollection(true)} className="new-collection-btn" title="Create or update if exists">
+              Update
+            </button>
+            <button onClick={handleDeleteCollection} className="delete-btn" title="Delete collection">
+              <Trash2 size={14} />
+            </button>
+          </div>
+          <div style={{ marginTop: 8 }}>
+            <small>Current: {selectedCollection}</small>
           </div>
         </div>
 
@@ -160,6 +225,8 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
+        
 
         {/* Document Upload */}
         <div className="section">

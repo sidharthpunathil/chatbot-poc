@@ -7,6 +7,12 @@ class ChatMessage(BaseModel):
     message: str = Field(..., description="The user's message/query", min_length=1)
     session_id: Optional[str] = Field(None, description="Optional session ID. If not provided, a new session will be created")
     collection_name: str = Field("default", description="ChromaDB collection name to query against")
+    # Optional per-request overrides
+    groq_model: Optional[str] = Field(None, description="Override model for this request")
+    max_tokens: Optional[int] = Field(None, description="Override max tokens for this request")
+    temperature: Optional[float] = Field(None, description="Override temperature for this request")
+    top_p: Optional[float] = Field(None, description="Override top_p for this request")
+    system_prompt: Optional[str] = Field(None, description="Optional system prompt to prepend to the conversation")
 
 
 class ChatResponse(BaseModel):
