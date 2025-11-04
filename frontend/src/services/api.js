@@ -11,11 +11,12 @@ const api = axios.create({
 
 // Chat API
 export const chatAPI = {
-  sendMessage: async (message, sessionId = null, collectionName = 'default') => {
+  sendMessage: async (message, sessionId = null, collectionName = 'default', config = {}) => {
     const response = await api.post('/chat/', {
       message,
       session_id: sessionId,
       collection_name: collectionName,
+      ...config,
     });
     return response.data;
   },
@@ -90,10 +91,11 @@ export const documentAPI = {
     return response.data;
   },
 
-  createCollection: async (name, metadata = {}) => {
+  createCollection: async (name, metadata = {}, overwrite = false) => {
     const response = await api.post('/documents/collections/create', {
       name,
       metadata,
+      overwrite,
     });
     return response.data;
   },

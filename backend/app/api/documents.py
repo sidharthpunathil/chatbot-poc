@@ -82,13 +82,23 @@ async def create_collection(collection_data: CollectionCreate):
     """Create a new collection"""
     try:
         client = get_chroma_client()
+        # Ensure metadata is a plain dict
+        metadata = dict(collection_data.metadata or {})
+        # Some vector stores reject empty metadata; pass None instead of {}
+        if not metadata:
+            metadata = None
         existing_collections = [col.name for col in client.list_collections()]
         if collection_data.name in existing_collections:
-            raise HTTPException(status_code=400, detail=f"Collection '{collection_data.name}' already exists")
-        collection = client.create_collection(
-            name=collection_data.name,
-            metadata=collection_data.metadata
-        )
+            if collection_data.overwrite:
+                client.delete_collection(name=collection_data.name)
+            else:
+                raise HTTPException(status_code=400, detail=f"Collection '{collection_data.name}' already exists")
+
+        # Create the collection after optional overwrite
+        if hasattr(client, "get_or_create_collection"):
+            collection = client.get_or_create_collection(name=collection_data.name, metadata=metadata)
+        else:
+            collection = client.create_collection(name=collection_data.name, metadata=metadata)
         return {
             "message": "Collection created successfully",
             "name": collection.name,

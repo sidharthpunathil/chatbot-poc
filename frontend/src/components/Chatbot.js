@@ -8,12 +8,16 @@ const Chatbot = () => {
   const [input, setInput] = useState('');
   const [sessionId, setSessionId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCollection] = useState('default');
+  const [selectedCollection, setSelectedCollection] = useState('default');
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     // Create a new session when component mounts
     createNewSession();
+    try {
+      const savedCollection = localStorage.getItem('selectedCollection');
+      if (savedCollection) setSelectedCollection(savedCollection);
+    } catch (_) {}
   }, []);
 
   useEffect(() => {
@@ -48,7 +52,21 @@ const Chatbot = () => {
     setIsLoading(true);
 
     try {
-      const response = await chatAPI.sendMessage(input, sessionId, selectedCollection);
+      // Pull chat config and system prompt from localStorage
+      const systemPrompt = localStorage.getItem('systemPrompt') || undefined;
+      const groqModel = localStorage.getItem('chat_groq_model') || undefined;
+      const maxTokensStr = localStorage.getItem('chat_max_tokens');
+      const temperatureStr = localStorage.getItem('chat_temperature');
+      const topPStr = localStorage.getItem('chat_top_p');
+      const config = {
+        system_prompt: systemPrompt,
+        groq_model: groqModel || undefined,
+      };
+      if (maxTokensStr) config.max_tokens = Number(maxTokensStr);
+      if (temperatureStr) config.temperature = Number(temperatureStr);
+      if (topPStr) config.top_p = Number(topPStr);
+
+      const response = await chatAPI.sendMessage(input, sessionId, selectedCollection, config);
       
       const botMessage = {
         type: 'bot',

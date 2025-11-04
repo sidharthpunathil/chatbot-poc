@@ -33,6 +33,11 @@ class Settings(BaseSettings):
     TEMPERATURE: float = 0.7
     TOP_P: float = 1.0
     N_RESULTS: int = 5
+    BASE_SYSTEM_PROMPT: str = (
+        "You are a helpful AI assistant. Based on the provided context, answer the user's "
+        "question accurately and concisely. If the context doesn't contain relevant information, "
+        "politely say so and provide a general helpful response if possible."
+    )
     
     model_config = {
         "env_file": ".env",

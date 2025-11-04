@@ -75,6 +75,7 @@
   display: flex;
   gap: 0.75rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .collection-select {
@@ -106,6 +107,26 @@
 
 .collection-select:hover {
   border-color: #9ca3af;
+}
+
+.collection-input {
+  flex: 1 1 260px;
+  min-width: 220px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.collection-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.collection-input::placeholder {
+  color: #9ca3af;
 }
 
 .new-collection-btn {
@@ -292,18 +313,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: #ff4444;
-  border: 2px solid #ff4444;
+  padding: 0.7rem 0.8rem;
+  background: #ef4444;
+  border: 1px solid #ef4444;
   color: white;
   cursor: pointer;
   font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 .delete-btn:hover {
-  background: white;
-  color: #ff4444;
+  background: #b91c1c;
+  border-color: #b91c1c;
 }
 
 /* Mobile Responsive */

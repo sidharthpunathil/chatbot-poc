@@ -13,12 +13,15 @@ class ChatService:
         self.embedding_model = get_embedding_model()
         self.chat_sessions = {}
     
-    def generate_response(self, query: str, context: List[str]) -> str:
+    def generate_response(self, query: str, context: List[str], *,
+                          groq_model: str = None,
+                          max_tokens: int = None,
+                          temperature: float = None,
+                          top_p: float = None,
+                          system_prompt_override: str = None) -> str:
         """Generate AI response using Groq API with provided context"""
         context_text = "\n\n".join(context)
-        system_prompt = """You are a helpful AI assistant. Based on the provided context, answer the user's
-        question accurately and concisely. If the context doesn't contain relevant information, politely say so
-        and provide a general helpful response if possible."""
+        system_prompt = system_prompt_override or settings.BASE_SYSTEM_PROMPT
         user_prompt = f"""
         Context:
         {context_text}
@@ -26,14 +29,14 @@ class ChatService:
         """
         try:
             response = self.groq_client.chat.completions.create(
-                model=settings.GROQ_MODEL,
+                model=groq_model or settings.GROQ_MODEL,
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
-                max_tokens=settings.MAX_TOKENS,
-                temperature=settings.TEMPERATURE,
-                top_p=settings.TOP_P,
+                max_tokens=max_tokens or settings.MAX_TOKENS,
+                temperature=temperature if temperature is not None else settings.TEMPERATURE,
+            top_p=top_p if top_p is not None else settings.TOP_P,
                 stream=False
             )
             return response.choices[0].message.content
@@ -56,7 +59,15 @@ class ChatService:
             for doc, meta, dist in zip(results['documents'][0], results['metadatas'][0], results['distances'][0]):
                 sources.append({"content": doc, "metadata": meta, "distance": dist})
 
-        ai_response = self.generate_response(message.message, context)
+        ai_response = self.generate_response(
+            message.message,
+            context,
+            groq_model=message.groq_model,
+            max_tokens=message.max_tokens,
+            temperature=message.temperature,
+            top_p=message.top_p,
+            system_prompt_override=message.system_prompt,
+        )
 
         # Store conversation history
         self.chat_sessions[message.session_id].append({
