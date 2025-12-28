@@ -15,7 +15,7 @@ const Home = () => {
           for students
         </p>
 
-        <Link to="/chat" className="primary-btn">
+        <Link to="/login" className="primary-btn">
           Start Chat
         </Link>
       </div>

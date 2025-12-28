@@ -1,0 +1,178 @@
+/* Login page styles based on the provided design */
+
+.auth {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  position: relative;
+  background: #f6f6f8;
+}
+
+/* LEFT (image + college heading) */
+.auth-left {
+  flex: 1;
+  min-width: 320px;
+  /* increase only the background image width */
+  background-size: 85% auto; /* width 85%, height auto */
+  background-position: top center; /* ensure image anchors to top */
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-start; /* place content at top */
+  justify-content: center;
+  position: relative;
+  padding-top: 1cm; /* 1cm down from the top */
+}
+
+.auth-left .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.left-content {
+  position: relative;
+  z-index: 1;
+  text-align: center; /* center logo */
+  /* leave top spacing, but exact top offset is on the parent .auth-left */
+  padding: 0 40px 24px;
+}
+
+.college-logo {
+  width: auto;
+  max-width: 540px; /* increased logo max-width on desktop */
+  max-height: 420px; /* cap height so it doesn't overflow the left panel */
+  display: block;
+  margin: 0 auto 16px;
+  height: auto;
+  object-fit: contain;
+}
+.auth-right {
+  width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card {
+  width: 100%;
+  background: #fff;
+  padding: 28px 28px 32px;
+  border-radius: 6px;
+  box-shadow: 0 6px 24px rgba(43, 23, 53, 0.08);
+}
+
+.card h3 {
+  margin: 0 0 6px;
+  color: #8b3fa9;
+}
+
+.subtitle {
+  margin: 0 0 18px;
+  color: #666;
+}
+
+.field {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.field .label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.85rem;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  background: rgba(250,250,250,0.9);
+  box-sizing: border-box;
+}
+
+.password-field {
+  position: relative;
+}
+
+.eye {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #8b3fa9;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.google-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.switch-text {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.divider {
+  text-align: center;
+  margin-top: 14px;
+  color: #999;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .auth {
+    flex-direction: column;
+  }
+
+  .auth-left {
+    width: 100%;
+    min-height: 52vh;
+    background-position: center top; /* top aligned on mobile too */
+    background-size: 95% auto; /* increase width on mobile */
+    background-repeat: no-repeat;
+  }
+
+  .left-content {
+    text-align: center;
+    padding-top: 12px; /* smaller offset on mobile */
+  }
+
+  .auth-right {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.85);
+    margin-top: -48px;
+    border-radius: 12px;
+    padding: 22px;
+  }
+
+  .college-logo { width: 240px; margin-bottom: 12px; }
+}

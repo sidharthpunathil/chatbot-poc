@@ -1,5 +1,77 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "./Login.css";
+import bg from "../assets/college-bg.png";
+import logo from "../assets/college-logo.png";
+
 const Login = () => {
-  return <h1>Login Page</h1>;
+  const [show, setShow] = useState(false);
+
+  return (
+    <section className="auth auth-login">
+      <div
+        className="auth-left"
+        style={{ backgroundImage: `url(${bg})` }}
+        aria-hidden
+      >
+        <div className="overlay" />
+        <div className="left-content">
+          <img
+            src={logo}
+            alt="Vimala College"
+            className="college-logo"
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="64"><rect width="100%" height="100%" fill="%23e9f2fb"/><text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" fill="%23345" font-family="Arial, Helvetica, sans-serif" font-size="14">Vimala College</text></svg>';
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="auth-right">
+        <div className="card">
+          <h3>Chatbot Login</h3>
+          <p className="subtitle">Welcome back! Please log in to continue</p>
+
+          <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+            <label className="field">
+              <span className="label">Email ID</span>
+              <input type="email" placeholder="Enter your email" />
+            </label>
+
+            <label className="field">
+              <span className="label">Password</span>
+              <div className="password-field">
+                <input
+                  type={show ? "text" : "password"}
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  className="eye"
+                  onClick={() => setShow((s) => !s)}
+                  aria-label={show ? "Hide password" : "Show password"}
+                >
+                  {show ? "Hide" : "Show"}
+                </button>
+              </div>
+            </label>
+
+            <button className="auth-btn">Login</button>
+          </form>
+
+          <p className="switch-text">
+            Don’t have an account? <Link to="/signup">Signup</Link>
+          </p>
+
+          <div className="divider">or</div>
+
+          <button className="google-btn">Login with Google</button>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Login;
