@@ -1,127 +1,40 @@
-.layout {
-  display: flex;
-  width: 100%;
-  max-width: 1400px;
-  height: 90vh;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  overflow: hidden;
-  margin: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-.sidebar {
-  width: 280px;
-  background: #f8fafc;
-  border-right: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-header {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.sidebar-header h2 {
-  margin: 0;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #1e293b;
-  letter-spacing: -0.025em;
-}
-
-.nav-menu {
-  padding: 1.5rem 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.nav-item {
+.navbar {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  color: #64748b;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  font-size: 0.95rem;
-  font-weight: 500;
-  position: relative;
-  border-radius: 8px;
-  margin: 0 0.5rem;
+  justify-content: space-between;
+  padding: 16px 40px;
+  background: white;
 }
 
-.nav-item:hover {
-  background: #f1f5f9;
-  color: #334155;
+.logo {
+  color: #8b3fa9;
+  font-weight: 700;
 }
 
-.nav-item.active {
-  background: #3b82f6;
-  color: white;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
-}
-
-.nav-item.active::before {
-  content: '';
-  position: absolute;
-  left: -0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 20px;
-  background: #3b82f6;
-  border-radius: 0 2px 2px 0;
-}
-
-.main-content {
-  flex: 1;
+.nav-links {
+  list-style: none;
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: #ffffff;
+  gap: 25px;
 }
 
-/* Mobile */
+.nav-links a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+}
+
+.nav-btn {
+  background-color: #8b3fa9;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Mobile navbar (simple) */
 @media (max-width: 768px) {
-  .layout {
-    width: 95%;
-    height: 95vh;
-    margin: 1rem;
-    border-radius: 16px;
-  }
-  
-  .sidebar {
-    width: 80px;
-  }
-  
-  .sidebar-header h2 {
-    font-size: 1rem;
-    text-align: center;
-  }
-  
-  .nav-item span {
+  .nav-links {
     display: none;
-  }
-  
-  .nav-item {
-    justify-content: center;
-    padding: 1rem 0.75rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .layout {
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    border-radius: 0;
-  }
-  
-  .sidebar {
-    width: 70px;
   }
 }
