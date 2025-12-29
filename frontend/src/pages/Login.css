@@ -34,17 +34,42 @@
   text-align: center; /* center logo */
   /* leave top spacing, but exact top offset is on the parent .auth-left */
   padding: 0 40px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-wrap {
+  /* remove visible white wrapper */
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  display: inline-block;
 }
 
 .college-logo {
   width: auto;
-  max-width: 540px; /* increased logo max-width on desktop */
-  max-height: 420px; /* cap height so it doesn't overflow the left panel */
+  max-width: 620px; /* slightly larger for clearer display */
+  max-height: 260px; /* cap height so it doesn't overflow */
   display: block;
-  margin: 0 auto 16px;
+  margin: 0 auto 8px;
   height: auto;
   object-fit: contain;
+  border-radius: 0;
 }
+
+/* fallback styling when the image fails to load (transparent, matching size) */
+.college-logo.logo-fallback {
+  background: transparent;
+  display: block;
+  padding: 0;
+  border-radius: 0;
+  width: 620px;
+  height: 260px;
+  object-fit: contain;
+}  
+
 .auth-right {
   width: 420px;
   display: flex;
@@ -174,5 +199,5 @@
     padding: 22px;
   }
 
-  .college-logo { width: 240px; margin-bottom: 12px; }
+  .college-logo { width: 420px; margin-bottom: 12px; }
 }

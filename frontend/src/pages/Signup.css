@@ -3,5 +3,7 @@
 /* minor overrides for signup if needed */
 .auth-signup .card h3 { color: #6b2f8f; }
 .auth-signup .auth-btn { background: #7b3aa0; }
-/* ensure signup uses the same larger logo */
-.auth-signup .college-logo { width: auto; max-width: 540px; max-height: 420px; display:block; margin: 0 auto 16px; }
+/* keep wrapper transparent and match larger size */
+.auth-signup .logo-wrap { padding: 0; }
+.auth-signup .college-logo { width: auto; max-width: 620px; max-height: 260px; display:block; margin: 0 auto 8px; }
+.auth-signup .college-logo.logo-fallback { width: 620px; height: 260px; background: transparent; }
