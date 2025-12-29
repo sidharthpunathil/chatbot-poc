@@ -16,16 +16,19 @@ const Login = () => {
       >
         <div className="overlay" />
         <div className="left-content">
-          <img
-            src={logo}
-            alt="Vimala College"
-            className="college-logo"
-            loading="lazy"
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="64"><rect width="100%" height="100%" fill="%23e9f2fb"/><text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" fill="%23345" font-family="Arial, Helvetica, sans-serif" font-size="14">Vimala College</text></svg>';
-            }}
-          />
+          <div className="logo-wrap" aria-hidden>
+            <img
+              src={logo}
+              alt="Vimala College"
+              className="college-logo"
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.classList.add('logo-fallback');
+                e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="64"><rect width="100%" height="100%" fill="%23e9f2fb"/><text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" fill="%23345" font-family="Arial, Helvetica, sans-serif" font-size="16">Vimala College</text></svg>';
+              }}
+            />
+          </div>
         </div>
       </div>
 
