@@ -1,43 +1,35 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Layout from "./components/Layout";
-
-// Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Chat from "./pages/Chat";
-import RecentChat from "./pages/RecentChat";
-import Faq from "./pages/Faq";
 import About from "./pages/About";
+import FAQ from "./pages/Faq";
 
-import "./App.css";
+import HomeLayout from "./components/HomeLayout";
 
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          {/* Redirect root to home */}
-          <Route path="/" element={<Home />} />
+      <Routes>
+        {/* Home WITH header & footer */}
+        <Route
+          path="/"
+          element={
+            <HomeLayout>
+              <Home />
+            </HomeLayout>
+          }
+        />
 
-          {/* Auth */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-
-          {/* Chat */}
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/recent-chat" element={<RecentChat />} />
-
-          {/* Info */}
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/about" element={<About />} />
-
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Layout>
+        {/* Pages WITHOUT header & footer */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/faq" element={<FAQ />} />
+      </Routes>
     </Router>
   );
 }
