@@ -8,15 +8,14 @@ const Login = () => {
 
   return (
     <section className="auth auth-login">
+      {/* LEFT IMAGE PANEL */}
       <div
         className="auth-left"
         style={{ backgroundImage: `url(${collegeImg})` }}
         aria-hidden
-      >
-        <div className="overlay" />
-        <div className="left-content" aria-hidden />
-      </div>
+      />
 
+      {/* RIGHT FORM PANEL */}
       <div className="auth-right">
         <div className="card">
           <h3>Chatbot Login</h3>
@@ -39,7 +38,6 @@ const Login = () => {
                   type="button"
                   className="eye"
                   onClick={() => setShow((s) => !s)}
-                  aria-label={show ? "Hide password" : "Show password"}
                 >
                   {show ? "Hide" : "Show"}
                 </button>
