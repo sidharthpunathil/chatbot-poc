@@ -27,3 +27,5 @@ chroma_db/
 # You might need to adjust this based on where your system stores it.
 .cache/huggingface/
 .cache/torch/
+venv
+env
