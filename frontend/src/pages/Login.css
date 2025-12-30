@@ -11,9 +11,9 @@
 .auth-left {
   flex: 1;
   min-width: 320px;
-  /* increase only the background image width */
-  background-size: 85% auto; /* width 85%, height auto */
-  background-position: top center; /* ensure image anchors to top */
+  /* make the background image fill the left panel like the old bg */
+  background-size: 100% auto; /* width 100%, height auto */
+  background-position: center top; /* ensure image anchors to top center */
   background-repeat: no-repeat;
   display: flex;
   align-items: flex-start; /* place content at top */
@@ -50,8 +50,8 @@
 
 .college-logo {
   width: auto;
-  max-width: 620px; /* slightly larger for clearer display */
-  max-height: 260px; /* cap height so it doesn't overflow */
+  max-width: 720px; /* increase to match old image size */
+  max-height: 320px; /* increase to match old image size */
   display: block;
   margin: 0 auto 8px;
   height: auto;
@@ -199,5 +199,5 @@
     padding: 22px;
   }
 
-  .college-logo { width: 420px; margin-bottom: 12px; }
+  .college-logo { width: 520px; margin-bottom: 12px; }
 }
