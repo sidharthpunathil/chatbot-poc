@@ -1,48 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Layout from './components/Layout';
+import Chatbot from './components/Chatbot';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-
-    // Add user message
-    const newMessages = [...messages, { type: 'user', text: input }];
-
-    // Add dummy bot response
-    newMessages.push({
-      type: 'bot',
-      text: `Bot says: "${input}"`, // You can replace this with real API response later
-    });
-
-    setMessages(newMessages);
-    setInput('');
-  };
-
   return (
-    <div className="app">
-      <div className="chat-container">
-        <div className="chat-box">
-          {messages.map((msg, index) => (
-            <div key={index} className={`chat-msg ${msg.type}`}>
-              {msg.text}
-            </div>
-          ))}
-        </div>
-
-        <div className="input-area">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message..."
-          />
-          <button onClick={handleSend}>Send</button>
-        </div>
+    <Router>
+      <div className="app">
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Navigate to="/chat" replace />} />
+            <Route path="/chat" element={<Chatbot />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </Layout>
       </div>
-    </div>
+    </Router>
   );
 }
 
