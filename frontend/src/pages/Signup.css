@@ -5,5 +5,5 @@
 .auth-signup .auth-btn { background: #7b3aa0; }
 /* keep wrapper transparent and match larger size */
 .auth-signup .logo-wrap { padding: 0; }
-.auth-signup .college-logo { width: auto; max-width: 620px; max-height: 260px; display:block; margin: 0 auto 8px; }
-.auth-signup .college-logo.logo-fallback { width: 620px; height: 260px; background: transparent; }
+.auth-signup .college-logo { width: auto; max-width: 720px; max-height: 320px; display:block; margin: 0 auto 8px; }
+.auth-signup .college-logo.logo-fallback { width: 720px; height: 320px; background: transparent; }
