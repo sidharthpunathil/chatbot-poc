@@ -1,15 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .core.config import settings
-from .api import chat, documents
 
+from .core.config import settings
+from .api import chat, documents, admin_auth
+from .api import chat, documents, admin_auth, admin_dashboard
+
+
+#  CREATE APP
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version="1.0.0",
     description="A chatbot API with document management and vector search capabilities"
 )
 
-# CORS middleware
+
+# CORS MIDDLEWARE
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.BACKEND_CORS_ORIGINS,
@@ -18,7 +23,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Root route
+
+# ROUTES
 @app.get("/")
 def root():
     return {
@@ -28,15 +34,14 @@ def root():
         "health": "/health"
     }
 
-# Health check
+
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "message": "API is running"}
 
-# Include routers
+
+#  ROUTERS
 app.include_router(chat.router, prefix=settings.API_V1_STR)
 app.include_router(documents.router, prefix=settings.API_V1_STR)
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+app.include_router(admin_auth.router, prefix=settings.API_V1_STR)
+app.include_router(admin_dashboard.router, prefix=settings.API_V1_STR)

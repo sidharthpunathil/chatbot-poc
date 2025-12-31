@@ -30,7 +30,7 @@ def get_embedding_model():
                 return SentenceTransformer(candidate)
             except Exception:
                 continue
-        # If all fallbacks fail, re-raise original error for visibility
+
         raise
 
 
