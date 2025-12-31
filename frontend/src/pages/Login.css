@@ -1,75 +1,20 @@
-/* Login page styles based on the provided design */
-
+/* MAIN WRAPPER */
 .auth {
-  min-height: calc(100vh - 70px);
+  min-height: calc(109vh - 70px);
   display: flex;
-  position: relative;
   background: #f6f6f8;
 }
 
-/* LEFT (image + college heading) */
+/* LEFT IMAGE PANEL */
 .auth-left {
   flex: 1;
   min-width: 320px;
-  /* increase only the background image width */
-  background-size: 85% auto; /* width 85%, height auto */
-  background-position: top center; /* ensure image anchors to top */
+  background-size: cover;        /* full brightness image */
+  background-position: center;  /* perfectly centered */
   background-repeat: no-repeat;
-  display: flex;
-  align-items: flex-start; /* place content at top */
-  justify-content: center;
-  position: relative;
-  padding-top: 1cm; /* 1cm down from the top */
 }
 
-.auth-left .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.left-content {
-  position: relative;
-  z-index: 1;
-  text-align: center; /* center logo */
-  /* leave top spacing, but exact top offset is on the parent .auth-left */
-  padding: 0 40px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-wrap {
-  /* remove visible white wrapper */
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
-  display: inline-block;
-}
-
-.college-logo {
-  width: auto;
-  max-width: 620px; /* slightly larger for clearer display */
-  max-height: 260px; /* cap height so it doesn't overflow */
-  display: block;
-  margin: 0 auto 8px;
-  height: auto;
-  object-fit: contain;
-  border-radius: 0;
-}
-
-/* fallback styling when the image fails to load (transparent, matching size) */
-.college-logo.logo-fallback {
-  background: transparent;
-  display: block;
-  padding: 0;
-  border-radius: 0;
-  width: 620px;
-  height: 260px;
-  object-fit: contain;
-}  
-
+/* RIGHT FORM PANEL */
 .auth-right {
   width: 420px;
   display: flex;
@@ -78,34 +23,35 @@
   padding: 40px 20px;
 }
 
+/* CARD */
 .card {
   width: 100%;
-  background: #fff;
+  background: #ffffff;
   padding: 28px 28px 32px;
-  border-radius: 6px;
+  border-radius: 8px;
   box-shadow: 0 6px 24px rgba(43, 23, 53, 0.08);
 }
 
 .card h3 {
-  margin: 0 0 6px;
+  margin-bottom: 6px;
   color: #8b3fa9;
 }
 
 .subtitle {
-  margin: 0 0 18px;
+  margin-bottom: 18px;
   color: #666;
 }
 
+/* FORM */
 .field {
-  display: block;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
-.field .label {
+.label {
   display: block;
-  margin-bottom: 8px;
-  color: #333;
+  margin-bottom: 6px;
   font-size: 0.85rem;
+  color: #333;
 }
 
 .auth-form input {
@@ -113,26 +59,28 @@
   padding: 12px 14px;
   border-radius: 8px;
   border: 1px solid #e6e6e6;
-  background: rgba(250,250,250,0.9);
+  background: #fafafa;
   box-sizing: border-box;
 }
 
+/* PASSWORD */
 .password-field {
   position: relative;
 }
 
 .eye {
   position: absolute;
-  right: 8px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  background: transparent;
+  background: none;
   border: none;
   color: #666;
   cursor: pointer;
   font-size: 0.85rem;
 }
 
+/* BUTTONS */
 .auth-btn {
   width: 100%;
   padding: 12px;
@@ -151,12 +99,9 @@
   border-radius: 6px;
   border: 1px solid #ddd;
   background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 }
 
+/* TEXT */
 .switch-text {
   text-align: center;
   margin-top: 12px;
@@ -175,16 +120,7 @@
   }
 
   .auth-left {
-    width: 100%;
-    min-height: 52vh;
-    background-position: center top; /* top aligned on mobile too */
-    background-size: 95% auto; /* increase width on mobile */
-    background-repeat: no-repeat;
-  }
-
-  .left-content {
-    text-align: center;
-    padding-top: 12px; /* smaller offset on mobile */
+    height: 45vh;
   }
 
   .auth-right {
@@ -193,11 +129,7 @@
   }
 
   .card {
-    background: rgba(255,255,255,0.85);
-    margin-top: -48px;
+    margin-top: -40px;
     border-radius: 12px;
-    padding: 22px;
   }
-
-  .college-logo { width: 420px; margin-bottom: 12px; }
 }
