@@ -45,7 +45,3 @@ app.include_router(chat.router, prefix=settings.API_V1_STR)
 app.include_router(documents.router, prefix=settings.API_V1_STR)
 app.include_router(admin_auth.router, prefix=settings.API_V1_STR)
 app.include_router(admin_dashboard.router, prefix=settings.API_V1_STR)
-
-
-
-
