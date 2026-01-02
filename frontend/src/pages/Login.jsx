@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import collegeImg from "../assets/college.png";
 
 const Login = () => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // frontend-only redirect
+    navigate("/chat");
+  };
 
   return (
     <section className="auth auth-login">
@@ -19,12 +26,14 @@ const Login = () => {
       <div className="auth-right">
         <div className="card">
           <h3>Chatbot Login</h3>
-          <p className="subtitle">Welcome back! Please log in to continue</p>
+          <p className="subtitle">
+            Welcome back! Please log in to continue
+          </p>
 
-          <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+          <form className="auth-form" onSubmit={handleLogin}>
             <label className="field">
               <span className="label">Email ID</span>
-              <input type="email" placeholder="Enter your email" />
+              <input type="email" placeholder="Enter your email" required />
             </label>
 
             <label className="field">
@@ -33,6 +42,7 @@ const Login = () => {
                 <input
                   type={show ? "text" : "password"}
                   placeholder="Enter your password"
+                  required
                 />
                 <button
                   type="button"
@@ -44,7 +54,9 @@ const Login = () => {
               </div>
             </label>
 
-            <button className="auth-btn">Login</button>
+            <button className="auth-btn" type="submit">
+              Login
+            </button>
           </form>
 
           <p className="switch-text">
