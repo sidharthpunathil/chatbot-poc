@@ -6,7 +6,7 @@ from ..core.config import settings
 
 router = APIRouter(
     prefix="/admin",
-    tags=["Admin Authentication"]
+    tags=["Admin Auth"]
 )
 
 ALGORITHM = "HS256"
@@ -40,4 +40,3 @@ def admin_login(data: AdminLoginRequest):
     )
 
     return {"access_token": token}
-
