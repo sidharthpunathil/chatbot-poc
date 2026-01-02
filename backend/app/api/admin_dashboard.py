@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from ..core.admin import admin_required
+from app.core.admin import admin_required
 
 router = APIRouter(prefix="/admin", tags=["Admin Dashboard"])
 
@@ -9,4 +9,3 @@ def admin_status(admin=Depends(admin_required)):
         "message": "Admin access granted",
         "admin": admin["sub"]
     }
-
