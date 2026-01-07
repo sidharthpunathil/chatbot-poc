@@ -1,0 +1,145 @@
+.chatbot-container {
+  max-width: 400px;
+  height: 100vh;
+  margin: auto;
+  background-color: #d9d1e4;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Header */
+.chatbot-header {
+  background-color: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu-icon {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.chatbot-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Content */
+.chatbot-content {
+  padding: 20px 16px;
+  overflow-y: auto;
+}
+
+.chatbot-content h2 {
+  color: #8c3d88;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 18px;
+}
+
+/* Chat list */
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-card {
+  background-color: #ffffff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.chat-text h4 {
+  font-size: 14px;
+  color: #8c3d88;
+  margin-bottom: 4px;
+}
+
+.chat-text p {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Delete button */
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #999;
+  padding: 4px;
+}
+
+.delete-btn:hover {
+  color: #c0392b;
+}
+
+/* Empty state */
+.empty-text {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-top: 20px;
+}
+
+/* =========================
+   Mobile View (<= 480px)
+   ========================= */
+@media (max-width: 480px) {
+  .chatbot-container {
+    max-width: 100%;
+    height: 100vh;
+  }
+
+  .chatbot-header {
+    padding: 12px;
+  }
+
+  .chatbot-title {
+    font-size: 15px;
+  }
+
+  .chatbot-content {
+    padding: 16px 12px;
+  }
+
+  .chatbot-content h2 {
+    font-size: 18px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+
+  .chat-card {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .chat-text h4 {
+    font-size: 13px;
+  }
+
+  .chat-text p {
+    font-size: 11.5px;
+  }
+
+  .delete-btn {
+    font-size: 15px;
+  }
+}

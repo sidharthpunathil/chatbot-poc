@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Chat from "./pages/Chat";
 import About from "./pages/About";
+import RecentChat from "./pages/RecentChat";
 import FAQ from "./pages/Faq";
 
 import HomeLayout from "./components/HomeLayout";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/about" element={<About />} />
+        <Route path="/recentchat" element={<RecentChat />} />
         <Route path="/faq" element={<FAQ />} />
 
         {/* Optional: redirect unknown routes to home */}
