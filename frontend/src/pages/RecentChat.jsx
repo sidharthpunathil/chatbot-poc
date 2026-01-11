@@ -33,11 +33,7 @@ const RecentChat = () => {
 
   return (
     <div className="chatbot-container">
-      {/* Header */}
-      <div className="chatbot-header">
-        <span className="menu-icon">☰</span>
-        <span className="chatbot-title">Chatbot</span>
-      </div>
+     
 
       {/* Content */}
       <div className="chatbot-content">
