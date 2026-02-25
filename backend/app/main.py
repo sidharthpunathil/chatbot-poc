@@ -1,9 +1,11 @@
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .core.config import settings
-from .api import chat, documents, admin_auth
-from .api import chat, documents, admin_auth, admin_dashboard
+from .api import chat, documents, admin_auth, admin_dashboard, announcements, scraper
 
 
 #  CREATE APP
@@ -45,3 +47,5 @@ app.include_router(chat.router, prefix=settings.API_V1_STR)
 app.include_router(documents.router, prefix=settings.API_V1_STR)
 app.include_router(admin_auth.router, prefix=settings.API_V1_STR)
 app.include_router(admin_dashboard.router, prefix=settings.API_V1_STR)
+app.include_router(announcements.router, prefix=settings.API_V1_STR)
+app.include_router(scraper.router, prefix=settings.API_V1_STR)

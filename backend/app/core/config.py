@@ -2,6 +2,7 @@ import os
 from typing import Optional
 from pydantic_settings import BaseSettings
 from pydantic import field_validator
+from .prompts import SYSTEM_PROMPT
 
 
 class Settings(BaseSettings):
@@ -29,15 +30,11 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
 
     # Chat Configuration
-    MAX_TOKENS: int = 500
-    TEMPERATURE: float = 0.7
+    MAX_TOKENS: int = 250
+    TEMPERATURE: float = 0.4
     TOP_P: float = 1.0
     N_RESULTS: int = 5
-    BASE_SYSTEM_PROMPT: str = (
-        "You are a helpful AI assistant. Based on the provided context, answer the user's "
-        "question accurately and concisely. If the context doesn't contain relevant information, "
-        "politely say so and provide a general helpful response if possible."
-    )
+    BASE_SYSTEM_PROMPT: str = SYSTEM_PROMPT
 
 
     ADMIN_USERNAME: str

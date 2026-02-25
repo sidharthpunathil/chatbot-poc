@@ -1,34 +1,54 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from typing import List
 from ..models.document import (
-    DocumentUpload, BulkDocumentUpload, CollectionCreate, 
+    DocumentUpload, BulkDocumentUpload, CollectionCreate,
     DocumentInfo, DocumentDetails, CollectionInfo
 )
 from ..services.document_service import document_service
 from ..core.database import get_chroma_client
+from ..core.admin import admin_required
 
 router = APIRouter(prefix="/documents", tags=["Document Management"])
 
 
+MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
+ALLOWED_EXTENSIONS = {".pdf", ".docx", ".doc", ".txt", ".md"}
+
+
 @router.post("/upload")
 async def upload_document(
-    file: UploadFile = File(...), 
-    collection_name: str = Form("default"), 
-    metadata: str = Form("{}")
+    file: UploadFile = File(...),
+    collection_name: str = Form("default"),
+    metadata: str = Form("{}"),
+    admin=Depends(admin_required),
 ):
-    """Upload and process a document file"""
+    """Upload and process a document file (admin only)"""
+    import os
+
+    ext = os.path.splitext(file.filename or "")[1].lower()
+    if ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unsupported file type '{ext}'. Allowed: {', '.join(ALLOWED_EXTENSIONS)}",
+        )
+
+    contents = await file.read()
+    if len(contents) > MAX_FILE_SIZE:
+        raise HTTPException(status_code=400, detail="File size exceeds 20 MB limit")
+    await file.seek(0)
+
     return document_service.upload_document(file, collection_name, metadata)
 
 
 @router.post("/embed")
-async def embed_text_content(document: DocumentUpload, collection_name: str = "default"):
-    """Embed text content directly"""
+async def embed_text_content(document: DocumentUpload, collection_name: str = "default", admin=Depends(admin_required)):
+    """Embed text content directly (admin only)"""
     return document_service.embed_text_content(document, collection_name)
 
 
 @router.post("/bulk-embed")
-async def bulk_embed_documents(bulk_data: BulkDocumentUpload, collection_name: str = "default"):
-    """Embed multiple documents"""
+async def bulk_embed_documents(bulk_data: BulkDocumentUpload, collection_name: str = "default", admin=Depends(admin_required)):
+    """Embed multiple documents (admin only)"""
     return document_service.bulk_embed_documents(bulk_data.documents, collection_name)
 
 
@@ -45,14 +65,14 @@ async def get_document_details(doc_id: str, collection_name: str = "default"):
 
 
 @router.delete("/{doc_id}")
-async def delete_document(doc_id: str, collection_name: str = "default"):
-    """Delete a document from the collection"""
+async def delete_document(doc_id: str, collection_name: str = "default", admin=Depends(admin_required)):
+    """Delete a document from the collection (admin only)"""
     return document_service.delete_document(doc_id, collection_name)
 
 
 @router.put("/{doc_id}")
-async def update_document(doc_id: str, document: DocumentUpload, collection_name: str = "default"):
-    """Update a document by replacing it"""
+async def update_document(doc_id: str, document: DocumentUpload, collection_name: str = "default", admin=Depends(admin_required)):
+    """Update a document by replacing it (admin only)"""
     return document_service.update_document(doc_id, document, collection_name)
 
 
@@ -78,7 +98,7 @@ async def list_collections():
 
 
 @router.post("/collections/create")
-async def create_collection(collection_data: CollectionCreate):
+async def create_collection(collection_data: CollectionCreate, admin=Depends(admin_required)):
     """Create a new collection"""
     try:
         client = get_chroma_client()
@@ -112,7 +132,7 @@ async def create_collection(collection_data: CollectionCreate):
 
 
 @router.delete("/collections/{collection_name}")
-async def delete_collection(collection_name: str):
+async def delete_collection(collection_name: str, admin=Depends(admin_required)):
     """Delete a collection"""
     try:
         client = get_chroma_client()

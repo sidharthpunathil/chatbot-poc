@@ -32,7 +32,7 @@ class DocumentService:
                 text += paragraph.text + "\n"
             return text
 
-        elif file.filename.endswith('.txt'):
+        elif file.filename.endswith('.txt') or file.filename.endswith('.md'):
             return content.decode('utf-8')
 
         else:
