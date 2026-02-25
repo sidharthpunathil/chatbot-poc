@@ -1,4 +1,132 @@
-body {
-  margin: 0;
-  background-color: #ffffff;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+
+  /* Design system palette — #7C3AED (violet-600) */
+  --color-primary: #7C3AED;
+  --color-primary-dark: #6D28D9;
+  --color-primary-light: #A78BFA;
+  --color-accent: #06B6D4;
+  --color-accent-dark: #0891B2;
+  --color-bg: #FAF5FF;
+  --color-text-dark: #1E1B4B;
+
+  /* Legacy tokens (kept for backward compat) */
+  --color-lavender: #FAF5FF;
+  --color-sidebar-pink: #EDE9FE;
+  --color-bot-msg: #EDE9FE;
+  --color-user-msg: #7C3AED;
+  --color-gray-text: #555;
+  --color-gray-mid: #666;
+  --color-gray-light: #777;
+}
+
+/* ── Chat markdown styling ─────────────────────────────── */
+.chat-md {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: #374151;
+}
+
+.chat-md p {
+  margin: 0.5em 0;
+}
+
+.chat-md p:first-child {
+  margin-top: 0;
+}
+
+.chat-md p:last-child {
+  margin-bottom: 0;
+}
+
+.chat-md ul,
+.chat-md ol {
+  margin: 0.5em 0;
+  padding-left: 1.25em;
+}
+
+.chat-md ul {
+  list-style-type: disc;
+}
+
+.chat-md ol {
+  list-style-type: decimal;
+}
+
+.chat-md li {
+  margin: 0.25em 0;
+}
+
+.chat-md li::marker {
+  color: #7c3aed;
+}
+
+.chat-md a {
+  color: #7c3aed;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.chat-md a:hover {
+  color: #6d28d9;
+}
+
+.chat-md strong {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.chat-md h1,
+.chat-md h2,
+.chat-md h3 {
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0.75em 0 0.35em;
+}
+
+.chat-md h1 { font-size: 1.1em; }
+.chat-md h2 { font-size: 1.05em; }
+.chat-md h3 { font-size: 1em; }
+
+.chat-md code {
+  background: #f3f4f6;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.chat-md pre {
+  background: #f3f4f6;
+  padding: 0.75em 1em;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0.5em 0;
+}
+
+.chat-md blockquote {
+  border-left: 3px solid #7c3aed;
+  padding-left: 0.75em;
+  margin: 0.5em 0;
+  color: #6b7280;
+}
+
+/* FAQ accordion arrow */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary {
+  list-style: none;
+}
+
+details summary::after {
+  content: "\2304";
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+details[open] summary::after {
+  transform: rotate(180deg);
 }

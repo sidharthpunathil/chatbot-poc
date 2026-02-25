@@ -1,13 +1,22 @@
 import axios from "axios";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:8000/api/v1";
+  import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
+});
+
+// Attach auth token to requests when available
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("access_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 /* ================= CHAT API ================= */
@@ -122,6 +131,15 @@ export const documentAPI = {
 
   deleteCollection: async (name) => {
     const response = await api.delete(`/documents/collections/${name}`);
+    return response.data;
+  },
+};
+
+/* ================= AUTH API ================= */
+
+export const authAPI = {
+  login: async (username, password) => {
+    const response = await api.post("/admin/login", { username, password });
     return response.data;
   },
 };
