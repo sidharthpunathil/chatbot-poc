@@ -23,9 +23,17 @@ class ChatService:
         context_text = "\n\n".join(context)
         system_prompt = system_prompt_override or settings.BASE_SYSTEM_PROMPT
         user_prompt = f"""
+        You are an AI assistant.
+
+        Answer ONLY using the provided context.
+        If the answer is not in the context, say: "Iam afraid, I can't help with the provided Query".
+
         Context:
         {context_text}
+
         Question: {query}
+
+        Give a clear and structured answer.
         """
         try:
             response = self.groq_client.chat.completions.create(
@@ -42,7 +50,7 @@ class ChatService:
             return response.choices[0].message.content
         except Exception as e:
             return f"Error generating response: {str(e)}"
-    
+
     def process_chat_message(self, message: ChatMessage) -> ChatResponse:
         """Process a chat message and return AI response"""
         if not message.session_id:
@@ -50,15 +58,40 @@ class ChatService:
             self.chat_sessions[message.session_id] = []
 
         collection = get_chroma_collection(message.collection_name)
+
+        # 🔹 Generate embedding
         query_embedding = self.embedding_model.encode([message.message]).tolist()
-        results = collection.query(query_embeddings=query_embedding, n_results=settings.N_RESULTS)
 
-        context = results['documents'][0] if results['documents'] else []
+        # 🔹 Retrieve more results (better context)
+        results = collection.query(
+            query_embeddings=query_embedding,
+            n_results=8
+        )
+
+        # 🔹 Extract context
+        raw_docs = results.get('documents', [[]])[0]
+
+        # 🔹 Remove duplicates
+        seen = set()
+        context = []
+        for doc in raw_docs:
+            if doc not in seen:
+                seen.add(doc)
+                context.append(doc)
+
+        # 🔹 Build clean sources
         sources = []
-        if results['metadatas'][0]:
-            for doc, meta, dist in zip(results['documents'][0], results['metadatas'][0], results['distances'][0]):
-                sources.append({"content": doc, "metadata": meta, "distance": dist})
+        metadatas = results.get('metadatas', [[]])[0]
+        distances = results.get('distances', [[]])[0]
 
+        for doc, meta, dist in zip(context, metadatas, distances):
+            sources.append({
+                "content": doc[:300],  # limit size
+                "metadata": meta,
+                "distance": dist
+            })
+
+        # 🔹 Generate response
         ai_response = self.generate_response(
             message.message,
             context,
@@ -69,7 +102,7 @@ class ChatService:
             system_prompt_override=message.system_prompt,
         )
 
-        # Store conversation history
+        # 🔹 Save history
         self.chat_sessions[message.session_id].append({
             "role": "user",
             "content": message.message,
